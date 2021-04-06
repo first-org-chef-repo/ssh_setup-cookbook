@@ -17,4 +17,4 @@ when 'ubuntu'
   end
 end
 
-include_recipe 'ssh_setup::remedy_compliance_breach'
+include_recipe 'ssh_setup::setup_ssh_config'

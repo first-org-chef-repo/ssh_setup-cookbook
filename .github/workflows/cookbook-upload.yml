@@ -1,4 +1,4 @@
-name: Test Kitchen
+name: Cookbooks Upload
 
 on: [ push, workflow_dispatch ]
   
@@ -38,6 +38,7 @@ jobs:
           sudo chmod 666 /run/docker.sock
           sudo service docker start
           service docker status
+
       - name: Kitchen Converge
         run: |
           kitchen destroy
@@ -46,7 +47,17 @@ jobs:
           
       - name: Kitchen Test
         run: kitchen verify
-      
-      - name: Cleanup Containers
+        
+      - name: Cleanup Containers 
         if: always()
         run: kitchen destroy
+
+  Cookbook-Upload:
+    runs-on: self-hosted
+    needs: Kitchen-Test
+    steps:
+      - name: Uploading Cookbooks to Chef Server
+        run: |
+          rm Berksfile.lock || echo 'Removeal not took place.'
+          berks install
+          berks upload --force
