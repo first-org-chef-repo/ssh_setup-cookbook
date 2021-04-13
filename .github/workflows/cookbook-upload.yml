@@ -41,6 +41,7 @@ jobs:
 
       - name: Kitchen Converge
         run: |
+          docker container prune -f
           kitchen destroy
           kitchen create
           kitchen converge
