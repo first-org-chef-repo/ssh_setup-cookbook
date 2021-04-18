@@ -5,7 +5,7 @@
 # Copyright:: 2021, The Authors, All Rights Reserved.
 
 case node['platform']
-when 'centos'
+when 'centos', 'amazon', 'almalinux'
   package %w(openssh openssh-server)
   service 'sshd' do
     action [ :start, :enable ]
